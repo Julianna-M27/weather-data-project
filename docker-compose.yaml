@@ -22,12 +22,25 @@ services:
       AIRFLOW_DATABASE_SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@db:5432/airflow_db
     volumes:
       - ./airflow/dags:/opt/airflow/dags
+      - ./api-request:/opt/airflow/api-request
     depends_on:
       - db
     networks:
       - my-network
     command: >
       bash -c "airflow db migrate && airflow standalone"
+
+  dbt:
+    container_name: dbt_container
+    image: ghcr.io/dbt-labs/dbt-postgres:1.9.latest
+    volumes:
+      - ./dbt:/usr/app
+    working_dir: /usr/app
+    depends_on:
+      - db
+    network:
+      - my-network
+    command: init
 
 networks:
   my-network:
