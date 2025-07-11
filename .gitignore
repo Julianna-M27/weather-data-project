@@ -1,3 +1,6 @@
 .env
 venv
 postgres
+target/
+dbt_packages/
+logs/
