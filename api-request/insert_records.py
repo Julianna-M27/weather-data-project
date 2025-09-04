@@ -86,4 +86,5 @@ def main():
             print("Database connection closed.")
             
         
-main()
+if __name__ == "__main__":
+    main()     # will NOT run when Airflow imports the module
